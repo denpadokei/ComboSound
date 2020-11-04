@@ -22,7 +22,7 @@ namespace ComboSound
         internal static Plugin Instance { get; private set; }
         internal static IPALogger Log { get; private set; }
 
-        public static string DataPath => Path.Combine(Environment.CurrentDirectory, "UserData", "ComboSounds");
+        public static string DataPath => Path.Combine(Environment.CurrentDirectory, "UserData", "ComboSound");
         [Init]
         /// <summary>
         /// Called when the plugin is first loaded by IPA (either when the game starts or when the plugin is enabled if it starts disabled).

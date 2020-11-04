@@ -62,22 +62,36 @@ namespace ComboSound.Modules
         {
             var audios = new List<AudioSource>();
             for (int i = 0; i < 12; i++) {
-                var song = UnityWebRequestMultimedia.GetAudioClip(Path.Combine(Plugin.DataPath, $"ComboSound.Resources.SoundResources.combo_{i + 1:000}.wav"), AudioType.WAV);
+                var songPath = Path.Combine(Plugin.DataPath, $"combo_{i + 1:000}.wav");
+                Logger.Debug(songPath);
+                var song = UnityWebRequestMultimedia.GetAudioClip(songPath, AudioType.WAV);
                 yield return song.SendWebRequest();
-                var audio = new AudioSource();
-                try {
-                    audio.clip = DownloadHandlerAudioClip.GetContent(song);
+                if (song.error != null) {
+                    Logger.Error($"{song.error}");
                 }
-                catch (Exception e) {
-                    Logger.Error(e);
+                else {
+                    var audio = this.gameObject.AddComponent<AudioSource>();
+                    try {
+                        audio.clip = DownloadHandlerAudioClip.GetContent(song);
+                        audios.Add(audio);
+                    }
+                    catch (Exception e) {
+                        Logger.Error(e);
+                        continue;
+                    }
+                    yield return new WaitWhile(() => !audio.clip);
                 }
-                yield return new WaitWhile(() => !audio.clip);
+                
             }
             this._audioSources = audios.ToArray();
         }
 
         private void ScoreController_comboDidChangeEvent(int obj)
         {
+            if (this._audioSources == null) {
+                return;
+            }
+
             switch (obj) {
                 case 50:
                     this._audioSources[0].Play();
