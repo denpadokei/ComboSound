@@ -63,6 +63,18 @@
       <OldZips Include="$(DestinationDirectory)$(AssemblyName)*.zip"/>
     </ItemGroup>
     <Copy SourceFiles="$(OutputAssemblyName).dll" DestinationFiles="$(ArtifactDestination)\Plugins\$(AssemblyName).dll" />
+    <Copy SourceFiles="$(OutputPath)\UserData\ComboSound\combo_001.wav" DestinationFiles="$(ProjectDir)$(ArtifactDestination)\UserData\ComboSound\combo_001.wav" />
+    <Copy SourceFiles="$(OutputPath)\UserData\ComboSound\combo_001.wav" DestinationFiles="$(ProjectDir)$(ArtifactDestination)\UserData\ComboSound\combo_002.wav" />
+    <Copy SourceFiles="$(OutputPath)\UserData\ComboSound\combo_001.wav" DestinationFiles="$(ProjectDir)$(ArtifactDestination)\UserData\ComboSound\combo_003.wav" />
+    <Copy SourceFiles="$(OutputPath)\UserData\ComboSound\combo_001.wav" DestinationFiles="$(ProjectDir)$(ArtifactDestination)\UserData\ComboSound\combo_004.wav" />
+    <Copy SourceFiles="$(OutputPath)\UserData\ComboSound\combo_001.wav" DestinationFiles="$(ProjectDir)$(ArtifactDestination)\UserData\ComboSound\combo_005.wav" />
+    <Copy SourceFiles="$(OutputPath)\UserData\ComboSound\combo_001.wav" DestinationFiles="$(ProjectDir)$(ArtifactDestination)\UserData\ComboSound\combo_006.wav" />
+    <Copy SourceFiles="$(OutputPath)\UserData\ComboSound\combo_001.wav" DestinationFiles="$(ProjectDir)$(ArtifactDestination)\UserData\ComboSound\combo_007.wav" />
+    <Copy SourceFiles="$(OutputPath)\UserData\ComboSound\combo_001.wav" DestinationFiles="$(ProjectDir)$(ArtifactDestination)\UserData\ComboSound\combo_008.wav" />
+    <Copy SourceFiles="$(OutputPath)\UserData\ComboSound\combo_001.wav" DestinationFiles="$(ProjectDir)$(ArtifactDestination)\UserData\ComboSound\combo_009.wav" />
+    <Copy SourceFiles="$(OutputPath)\UserData\ComboSound\combo_001.wav" DestinationFiles="$(ProjectDir)$(ArtifactDestination)\UserData\ComboSound\combo_010.wav" />
+    <Copy SourceFiles="$(OutputPath)\UserData\ComboSound\combo_001.wav" DestinationFiles="$(ProjectDir)$(ArtifactDestination)\UserData\ComboSound\combo_011.wav" />
+    <Copy SourceFiles="$(OutputPath)\UserData\ComboSound\combo_001.wav" DestinationFiles="$(ProjectDir)$(ArtifactDestination)\UserData\ComboSound\combo_012.wav" />
     <Message Text="PluginVersion: $(PluginVersion), AssemblyVersion: $(AssemblyVersion), GameVersion: $(GameVersion)" Importance="high" />
     <Delete Files="@(OldZips)" TreatErrorsAsWarnings="true" ContinueOnError="true" />
     <ZipDir SourceDirectory="$(ArtifactDestination)" DestinationFile="$(DestinationDirectory)$(ArtifactName).zip" />
