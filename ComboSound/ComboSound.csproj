@@ -41,6 +41,11 @@
     <DisableZipRelease>True</DisableZipRelease>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BSML, Version=1.4.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <Private>False</Private>
+      <HintPath>$(BeatSaberDir)\Plugins\BSML.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
     <Reference Include="SiraUtil, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <Private>False</Private>
       <HintPath>$(BeatSaberDir)\Plugins\SiraUtil.dll</HintPath>
@@ -130,6 +135,7 @@
     <Compile Include="Modules\ComboSoundController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\Utility.cs" />
+    <Compile Include="Views\SettingView.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="manifest.json" />
@@ -138,6 +144,9 @@
     <None Include="Directory.Build.props" Condition="Exists('Directory.Build.props')" />
     <None Include="Directory.Build.targets" Condition="Exists('Directory.Build.targets')" />
     <None Include="ComboSound.csproj.user" Condition="Exists('ComboSound.csproj.user')" />
+    <EmbeddedResource Include="Views\SettingView.bsml">
+      <DependentUpon>SettingView.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="BeatSaberModdingTools.Tasks">
@@ -148,40 +157,61 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Content Include="UserData\ComboSound\combo_001.wav">
+    <Content Include="UserData\ComboSound\combo_0050.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="UserData\ComboSound\combo_002.wav">
+    <Content Include="UserData\ComboSound\combo_0100.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="UserData\ComboSound\combo_003.wav">
+    <Content Include="UserData\ComboSound\combo_0200.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="UserData\ComboSound\combo_004.wav">
+    <Content Include="UserData\ComboSound\combo_0300.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="UserData\ComboSound\combo_005.wav">
+    <Content Include="UserData\ComboSound\combo_0400.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="UserData\ComboSound\combo_006.wav">
+    <Content Include="UserData\ComboSound\combo_0500.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="UserData\ComboSound\combo_007.wav">
+    <Content Include="UserData\ComboSound\combo_0600.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="UserData\ComboSound\combo_008.wav">
+    <Content Include="UserData\ComboSound\combo_0700.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="UserData\ComboSound\combo_009.wav">
+    <Content Include="UserData\ComboSound\combo_0800.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="UserData\ComboSound\combo_010.wav">
+    <Content Include="UserData\ComboSound\combo_0900.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="UserData\ComboSound\combo_011.wav">
+    <Content Include="UserData\ComboSound\combo_1000.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="UserData\ComboSound\combo_012.wav">
+    <Content Include="UserData\ComboSound\combo_2000.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UserData\ComboSound\combo_3000.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UserData\ComboSound\combo_4000.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UserData\ComboSound\combo_5000.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UserData\ComboSound\combo_6000.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UserData\ComboSound\combo_7000.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UserData\ComboSound\combo_8000.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UserData\ComboSound\combo_9000.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

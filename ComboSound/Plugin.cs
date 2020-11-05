@@ -12,6 +12,8 @@ using ComboSound.Modules;
 using System.IO;
 using SiraUtil.Zenject;
 using ComboSound.Installer;
+using BeatSaberMarkupLanguage.GameplaySetup;
+using ComboSound.Views;
 
 namespace ComboSound
 {
@@ -53,15 +55,25 @@ namespace ComboSound
         public void OnApplicationStart()
         {
             Log.Debug("OnApplicationStart");
-            new GameObject("ComboSoundController").AddComponent<ComboSoundController>();
+        }
 
+        [OnEnable]
+        public void OnEnable()
+        {
+            try {
+                Logger.Debug("OnEnable call");
+                Logger.Debug(SettingView.instance.ResourceName);
+                GameplaySetup.instance.AddTab("COMBO SOUND", SettingView.instance.ResourceName, SettingView.instance);
+            }
+            catch (Exception e) {
+                Logger.Error(e);
+            }
         }
 
         [OnExit]
         public void OnApplicationQuit()
         {
             Log.Debug("OnApplicationQuit");
-
         }
     }
 }

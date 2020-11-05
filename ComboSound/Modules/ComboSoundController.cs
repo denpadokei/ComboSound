@@ -1,4 +1,5 @@
 ﻿using ComboSound.Utilities;
+using ComboSound.Views;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -23,7 +25,9 @@ namespace ComboSound.Modules
         [Inject]
         ScoreController _scoreController;
 
-        private AudioSource[] _audioSources;
+        private Dictionary<int, AudioSource> _audioSources;
+
+        private static readonly Regex _songFileRegex = new Regex(@"combo_[0-9]{4}\.wav");
 
         // These methods are automatically called by Unity, you should remove any you aren't using.
         #region Monobehaviour Messages
@@ -48,9 +52,13 @@ namespace ComboSound.Modules
         [Inject]
         void Constractor()
         {
+            if (!SettingView.instance.IsEnable) {
+                Logger.Debug("Combo sound is Disable");
+                return;
+            }
+
             _scoreController.comboDidChangeEvent -= this.ScoreController_comboDidChangeEvent;
             _scoreController.comboDidChangeEvent += this.ScoreController_comboDidChangeEvent;
-            
         }
 
         public void Initialize()
@@ -60,20 +68,23 @@ namespace ComboSound.Modules
 
         IEnumerator CreateAudioSources()
         {
-            var audios = new List<AudioSource>();
-            for (int i = 0; i < 12; i++) {
-                var songPath = Path.Combine(Plugin.DataPath, $"combo_{i + 1:000}.wav");
+            var audios = new List<KeyValuePair<int, AudioSource>>();
+            foreach (var songPath in Directory.EnumerateFiles(Plugin.DataPath, "*.wav", SearchOption.AllDirectories).Where(x => _songFileRegex.IsMatch(Path.GetFileName(x)))) {
                 Logger.Debug(songPath);
                 var song = UnityWebRequestMultimedia.GetAudioClip(songPath, AudioType.WAV);
                 yield return song.SendWebRequest();
-                if (song.error != null) {
+                if (!string.IsNullOrEmpty(song.error)) {
                     Logger.Error($"{song.error}");
                 }
                 else {
                     var audio = this.gameObject.AddComponent<AudioSource>();
                     try {
                         audio.clip = DownloadHandlerAudioClip.GetContent(song);
-                        audios.Add(audio);
+                        audio.clip.name = Path.GetFileName(songPath);
+                        var conboNum = Regex.Match(audio.clip.name, "[0-9]{4}").Value;
+                        if (int.TryParse(conboNum, out var number)) {
+                            audios.Add(new KeyValuePair<int, AudioSource>(number, audio));
+                        }
                     }
                     catch (Exception e) {
                         Logger.Error(e);
@@ -81,56 +92,15 @@ namespace ComboSound.Modules
                     }
                     yield return new WaitWhile(() => !audio.clip);
                 }
-                
             }
-            this._audioSources = audios.ToArray();
+
+            this._audioSources = new Dictionary<int, AudioSource>(audios);
         }
 
         private void ScoreController_comboDidChangeEvent(int obj)
         {
-            if (this._audioSources == null) {
-                return;
-            }
-
-            switch (obj) {
-                case 50:
-                    this._audioSources[0].Play();
-                    break;
-                case 100:
-                    this._audioSources[1].Play();
-                    break;
-                case 200:
-                    this._audioSources[2].Play();
-                    break;
-                case 300:
-                    this._audioSources[3].Play();
-                    break;
-                case 400:
-                    this._audioSources[4].Play();
-                    break;
-                case 500:
-                    this._audioSources[5].Play();
-                    break;
-                case 600:
-                    this._audioSources[6].Play();
-                    break;
-                case 700:
-                    this._audioSources[7].Play();
-                    break;
-                case 800:
-                    this._audioSources[8].Play();
-                    break;
-                case 900:
-                    this._audioSources[9].Play();
-                    break;
-                case 1000:
-                    this._audioSources[10].Play();
-                    break;
-                case 1100:
-                    this._audioSources[11].Play();
-                    break;
-                default:
-                    break;
+            if (this._audioSources == null && this._audioSources.TryGetValue(obj, out var audioSource)) {
+                audioSource.Play();
             }
         }
     }

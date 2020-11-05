@@ -63,18 +63,25 @@
       <OldZips Include="$(DestinationDirectory)$(AssemblyName)*.zip"/>
     </ItemGroup>
     <Copy SourceFiles="$(OutputAssemblyName).dll" DestinationFiles="$(ArtifactDestination)\Plugins\$(AssemblyName).dll" />
-    <Copy SourceFiles="$(OutputPath)\UserData\ComboSound\combo_001.wav" DestinationFiles="$(ProjectDir)$(ArtifactDestination)\UserData\ComboSound\combo_001.wav" />
-    <Copy SourceFiles="$(OutputPath)\UserData\ComboSound\combo_001.wav" DestinationFiles="$(ProjectDir)$(ArtifactDestination)\UserData\ComboSound\combo_002.wav" />
-    <Copy SourceFiles="$(OutputPath)\UserData\ComboSound\combo_001.wav" DestinationFiles="$(ProjectDir)$(ArtifactDestination)\UserData\ComboSound\combo_003.wav" />
-    <Copy SourceFiles="$(OutputPath)\UserData\ComboSound\combo_001.wav" DestinationFiles="$(ProjectDir)$(ArtifactDestination)\UserData\ComboSound\combo_004.wav" />
-    <Copy SourceFiles="$(OutputPath)\UserData\ComboSound\combo_001.wav" DestinationFiles="$(ProjectDir)$(ArtifactDestination)\UserData\ComboSound\combo_005.wav" />
-    <Copy SourceFiles="$(OutputPath)\UserData\ComboSound\combo_001.wav" DestinationFiles="$(ProjectDir)$(ArtifactDestination)\UserData\ComboSound\combo_006.wav" />
-    <Copy SourceFiles="$(OutputPath)\UserData\ComboSound\combo_001.wav" DestinationFiles="$(ProjectDir)$(ArtifactDestination)\UserData\ComboSound\combo_007.wav" />
-    <Copy SourceFiles="$(OutputPath)\UserData\ComboSound\combo_001.wav" DestinationFiles="$(ProjectDir)$(ArtifactDestination)\UserData\ComboSound\combo_008.wav" />
-    <Copy SourceFiles="$(OutputPath)\UserData\ComboSound\combo_001.wav" DestinationFiles="$(ProjectDir)$(ArtifactDestination)\UserData\ComboSound\combo_009.wav" />
-    <Copy SourceFiles="$(OutputPath)\UserData\ComboSound\combo_001.wav" DestinationFiles="$(ProjectDir)$(ArtifactDestination)\UserData\ComboSound\combo_010.wav" />
-    <Copy SourceFiles="$(OutputPath)\UserData\ComboSound\combo_001.wav" DestinationFiles="$(ProjectDir)$(ArtifactDestination)\UserData\ComboSound\combo_011.wav" />
-    <Copy SourceFiles="$(OutputPath)\UserData\ComboSound\combo_001.wav" DestinationFiles="$(ProjectDir)$(ArtifactDestination)\UserData\ComboSound\combo_012.wav" />
+    <Copy SourceFiles="$(OutputPath)\UserData\ComboSound\combo_0050.wav" DestinationFiles="$(ProjectDir)$(ArtifactDestination)\UserData\ComboSound\combo_0050.wav" />
+    <Copy SourceFiles="$(OutputPath)\UserData\ComboSound\combo_0100.wav" DestinationFiles="$(ProjectDir)$(ArtifactDestination)\UserData\ComboSound\combo_0100.wav" />
+    <Copy SourceFiles="$(OutputPath)\UserData\ComboSound\combo_0200.wav" DestinationFiles="$(ProjectDir)$(ArtifactDestination)\UserData\ComboSound\combo_0200.wav" />
+    <Copy SourceFiles="$(OutputPath)\UserData\ComboSound\combo_0300.wav" DestinationFiles="$(ProjectDir)$(ArtifactDestination)\UserData\ComboSound\combo_0300.wav" />
+    <Copy SourceFiles="$(OutputPath)\UserData\ComboSound\combo_0400.wav" DestinationFiles="$(ProjectDir)$(ArtifactDestination)\UserData\ComboSound\combo_0400.wav" />
+    <Copy SourceFiles="$(OutputPath)\UserData\ComboSound\combo_0500.wav" DestinationFiles="$(ProjectDir)$(ArtifactDestination)\UserData\ComboSound\combo_0500.wav" />
+    <Copy SourceFiles="$(OutputPath)\UserData\ComboSound\combo_0600.wav" DestinationFiles="$(ProjectDir)$(ArtifactDestination)\UserData\ComboSound\combo_0600.wav" />
+    <Copy SourceFiles="$(OutputPath)\UserData\ComboSound\combo_0700.wav" DestinationFiles="$(ProjectDir)$(ArtifactDestination)\UserData\ComboSound\combo_0700.wav" />
+    <Copy SourceFiles="$(OutputPath)\UserData\ComboSound\combo_0800.wav" DestinationFiles="$(ProjectDir)$(ArtifactDestination)\UserData\ComboSound\combo_0800.wav" />
+    <Copy SourceFiles="$(OutputPath)\UserData\ComboSound\combo_0900.wav" DestinationFiles="$(ProjectDir)$(ArtifactDestination)\UserData\ComboSound\combo_0900.wav" />
+    <Copy SourceFiles="$(OutputPath)\UserData\ComboSound\combo_1000.wav" DestinationFiles="$(ProjectDir)$(ArtifactDestination)\UserData\ComboSound\combo_1000.wav" />
+    <Copy SourceFiles="$(OutputPath)\UserData\ComboSound\combo_2000.wav" DestinationFiles="$(ProjectDir)$(ArtifactDestination)\UserData\ComboSound\combo_2000.wav" />
+    <Copy SourceFiles="$(OutputPath)\UserData\ComboSound\combo_3000.wav" DestinationFiles="$(ProjectDir)$(ArtifactDestination)\UserData\ComboSound\combo_3000.wav" />
+    <Copy SourceFiles="$(OutputPath)\UserData\ComboSound\combo_4000.wav" DestinationFiles="$(ProjectDir)$(ArtifactDestination)\UserData\ComboSound\combo_4000.wav" />
+    <Copy SourceFiles="$(OutputPath)\UserData\ComboSound\combo_5000.wav" DestinationFiles="$(ProjectDir)$(ArtifactDestination)\UserData\ComboSound\combo_5000.wav" />
+    <Copy SourceFiles="$(OutputPath)\UserData\ComboSound\combo_6000.wav" DestinationFiles="$(ProjectDir)$(ArtifactDestination)\UserData\ComboSound\combo_6000.wav" />
+    <Copy SourceFiles="$(OutputPath)\UserData\ComboSound\combo_7000.wav" DestinationFiles="$(ProjectDir)$(ArtifactDestination)\UserData\ComboSound\combo_7000.wav" />
+    <Copy SourceFiles="$(OutputPath)\UserData\ComboSound\combo_8000.wav" DestinationFiles="$(ProjectDir)$(ArtifactDestination)\UserData\ComboSound\combo_8000.wav" />
+    <Copy SourceFiles="$(OutputPath)\UserData\ComboSound\combo_9000.wav" DestinationFiles="$(ProjectDir)$(ArtifactDestination)\UserData\ComboSound\combo_9000.wav" />
     <Message Text="PluginVersion: $(PluginVersion), AssemblyVersion: $(AssemblyVersion), GameVersion: $(GameVersion)" Importance="high" />
     <Delete Files="@(OldZips)" TreatErrorsAsWarnings="true" ContinueOnError="true" />
     <ZipDir SourceDirectory="$(ArtifactDestination)" DestinationFile="$(DestinationDirectory)$(ArtifactName).zip" />

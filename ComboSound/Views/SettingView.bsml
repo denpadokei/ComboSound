@@ -1,0 +1,5 @@
+﻿<bg xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='https://monkeymanboy.github.io/BSML-Docs/ https://raw.githubusercontent.com/monkeymanboy/BSML-Docs/gh-pages/BSMLSchema.xsd'>
+  <vertical horizontal-fit='MinSize' child-align='UpperCenter'>
+    <checkbox min-width='40' text='Enable' value='is-enable' bind-value='true' apply-on-change='true'></checkbox>
+  </vertical>
+</bg>
