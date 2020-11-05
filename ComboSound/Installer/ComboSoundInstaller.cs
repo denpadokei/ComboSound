@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Zenject;
 using SiraUtil;
+using UnityEngine;
 
 namespace ComboSound.Installer
 {
@@ -13,7 +14,7 @@ namespace ComboSound.Installer
     {
         public override void InstallBindings()
         {
-            this.Container.BindInterfacesAndSelfTo<ComboSoundController>().FromNewComponentOnNewGameObject().AsSingle().NonLazy();
+            this.Container.BindInterfacesAndSelfTo<ComboSoundController>().FromComponentsOn(new GameObject("ConboSound", typeof(ComboSoundController))).AsSingle().NonLazy();
         }
     }
 }

@@ -46,7 +46,7 @@
       <HintPath>$(BeatSaberDir)\Plugins\BSML.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="SiraUtil, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="SiraUtil, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <Private>False</Private>
       <HintPath>$(BeatSaberDir)\Plugins\SiraUtil.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>

@@ -22,7 +22,6 @@ namespace ComboSound.Modules
     /// </summary>
     public class ComboSoundController : MonoBehaviour, IInitializable
     {
-        [Inject]
         ScoreController _scoreController;
 
         private Dictionary<int, AudioSource> _audioSources;
@@ -37,6 +36,13 @@ namespace ComboSound.Modules
         private void Awake()
         {
             Logger.Debug($"{name}: Awake()");
+            if (!SettingView.instance.IsEnable) {
+                Logger.Debug("Combo sound is Disable");
+                return;
+            }
+            _scoreController = Resources.FindObjectsOfTypeAll<ScoreController>().First();
+            _scoreController.comboDidChangeEvent -= this.ScoreController_comboDidChangeEvent;
+            _scoreController.comboDidChangeEvent += this.ScoreController_comboDidChangeEvent;
         }
         
 
@@ -49,18 +55,6 @@ namespace ComboSound.Modules
             _scoreController.comboDidChangeEvent -= this.ScoreController_comboDidChangeEvent;
         }
         #endregion
-        [Inject]
-        void Constractor()
-        {
-            if (!SettingView.instance.IsEnable) {
-                Logger.Debug("Combo sound is Disable");
-                return;
-            }
-
-            _scoreController.comboDidChangeEvent -= this.ScoreController_comboDidChangeEvent;
-            _scoreController.comboDidChangeEvent += this.ScoreController_comboDidChangeEvent;
-        }
-
         public void Initialize()
         {
             this.StartCoroutine(this.CreateAudioSources());
