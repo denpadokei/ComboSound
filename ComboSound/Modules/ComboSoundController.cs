@@ -99,7 +99,7 @@ namespace ComboSound.Modules
 
         private void ScoreController_comboDidChangeEvent(int obj)
         {
-            if (this._audioSources == null && this._audioSources.TryGetValue(obj, out var audioSource)) {
+            if (this._audioSources != null && this._audioSources.TryGetValue(obj, out var audioSource)) {
                 audioSource.Play();
             }
         }
