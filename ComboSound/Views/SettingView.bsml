@@ -1,5 +1,6 @@
 ﻿<bg xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='https://monkeymanboy.github.io/BSML-Docs/ https://raw.githubusercontent.com/monkeymanboy/BSML-Docs/gh-pages/BSMLSchema.xsd'>
-  <vertical horizontal-fit='MinSize' child-align='UpperCenter'>
-    <checkbox min-width='40' text='Enable' value='is-enable' bind-value='true' apply-on-change='true'></checkbox>
+  <vertical horizontal-fit='PreferredSize' child-align='UpperCenter' vertical-fit='PreferredSize'>
+    <checkbox text='Enable' value='is-enable' bind-value='true' apply-on-change='true'></checkbox>
+    <slider-setting text='Volume' increment='10' integer-only='true' min='0' max='100' value='volume' bind-value='true' apply-on-change='true'></slider-setting>
   </vertical>
 </bg>

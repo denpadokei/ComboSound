@@ -1,4 +1,5 @@
-﻿using ComboSound.Utilities;
+﻿using ComboSound.Configuration;
+using ComboSound.Utilities;
 using ComboSound.Views;
 using System;
 using System.Collections;
@@ -52,7 +53,7 @@ namespace ComboSound.Modules
         [Inject]
         void Constractor()
         {
-            if (!SettingView.instance.IsEnable) {
+            if (!PluginConfig.Instance.Enable) {
                 Logger.Debug("Combo sound is Disable");
                 return;
             }
@@ -79,6 +80,7 @@ namespace ComboSound.Modules
                 else {
                     var audio = this.gameObject.AddComponent<AudioSource>();
                     try {
+                        audio.volume = PluginConfig.Instance.Volume / 100f;
                         audio.clip = DownloadHandlerAudioClip.GetContent(song);
                         audio.clip.name = Path.GetFileName(songPath);
                         var conboNum = Regex.Match(audio.clip.name, "[0-9]{4}").Value;
