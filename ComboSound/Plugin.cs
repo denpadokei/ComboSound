@@ -31,26 +31,13 @@ namespace ComboSound
         /// [Init] methods that use a Constructor or called before regular methods like InitWithConfig.
         /// Only use [Init] with one Constructor.
         /// </summary>
-        public void Init(IPALogger logger)
+        public void Init(IPALogger logger, Config conf)
         {
             Instance = this;
             Log = logger;
             Log.Info("ComboSound initialized.");
             SiraUtil.Zenject.Installer.RegisterGameCoreInstaller<ComboSoundInstaller>();
         }
-
-        #region BSIPA Config
-        //Uncomment to use BSIPA's config
-        /*
-        [Init]
-        public void InitWithConfig(Config conf)
-        {
-            Configuration.PluginConfig.Instance = conf.Generated<Configuration.PluginConfig>();
-            Log.Debug("Config loaded");
-        }
-        */
-        #endregion
-
         [OnStart]
         public void OnApplicationStart()
         {
