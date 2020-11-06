@@ -1,6 +1,6 @@
 # ComboSound
 太鼓の達人のあれっぽいやつ  
-依存MOD
+依存MOD  
 [SiraUtil](https://github.com/Auros/SiraUtil)  
 [BeatSaberMarkupLanguage](https://github.com/monkeymanboy/BeatSaberMarkupLanguage)  
 (ModAssistantからインストール可能)
