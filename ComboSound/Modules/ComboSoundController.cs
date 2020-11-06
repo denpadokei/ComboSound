@@ -1,4 +1,5 @@
-﻿using ComboSound.Utilities;
+﻿using ComboSound.Configuration;
+using ComboSound.Utilities;
 using ComboSound.Views;
 using System;
 using System.Collections;
@@ -36,7 +37,7 @@ namespace ComboSound.Modules
         private void Awake()
         {
             Logger.Debug($"{name}: Awake()");
-            if (!SettingView.instance.IsEnable) {
+            if (!PluginConfig.Instance.Enable) {
                 Logger.Debug("Combo sound is Disable");
                 return;
             }
@@ -55,6 +56,8 @@ namespace ComboSound.Modules
             _scoreController.comboDidChangeEvent -= this.ScoreController_comboDidChangeEvent;
         }
         #endregion
+        
+
         public void Initialize()
         {
             this.StartCoroutine(this.CreateAudioSources());
@@ -73,6 +76,7 @@ namespace ComboSound.Modules
                 else {
                     var audio = this.gameObject.AddComponent<AudioSource>();
                     try {
+                        audio.volume = PluginConfig.Instance.Volume / 100f;
                         audio.clip = DownloadHandlerAudioClip.GetContent(song);
                         audio.clip.name = Path.GetFileName(songPath);
                         var conboNum = Regex.Match(audio.clip.name, "[0-9]{4}").Value;

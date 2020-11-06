@@ -36,8 +36,11 @@ namespace ComboSound
             Instance = this;
             Log = logger;
             Log.Info("ComboSound initialized.");
+            Configuration.PluginConfig.Instance = conf.Generated<Configuration.PluginConfig>();
+            Log.Debug("Config loaded");
             SiraUtil.Zenject.Installer.RegisterGameCoreInstaller<ComboSoundInstaller>();
         }
+
         [OnStart]
         public void OnApplicationStart()
         {
