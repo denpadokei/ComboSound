@@ -130,6 +130,7 @@
   <ItemGroup>
     <Compile Include="Installer\ComboSoundInstaller.cs" />
     <Compile Include="Logger.cs" />
+    <Compile Include="Modules\SoundManager.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Configuration\PluginConfig.cs" />
     <Compile Include="Modules\ComboSoundController.cs" />
@@ -155,65 +156,26 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <Content Include="UserData\ComboSound\combo_0050.wav">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="UserData\ComboSound\combo_0100.wav">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="UserData\ComboSound\combo_0200.wav">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="UserData\ComboSound\combo_0300.wav">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="UserData\ComboSound\combo_0400.wav">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="UserData\ComboSound\combo_0500.wav">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="UserData\ComboSound\combo_0600.wav">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="UserData\ComboSound\combo_0700.wav">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="UserData\ComboSound\combo_0800.wav">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="UserData\ComboSound\combo_0900.wav">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="UserData\ComboSound\combo_1000.wav">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="UserData\ComboSound\combo_2000.wav">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="UserData\ComboSound\combo_3000.wav">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="UserData\ComboSound\combo_4000.wav">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="UserData\ComboSound\combo_5000.wav">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="UserData\ComboSound\combo_6000.wav">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="UserData\ComboSound\combo_7000.wav">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="UserData\ComboSound\combo_8000.wav">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="UserData\ComboSound\combo_9000.wav">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Content Include="UserData\ComboSound\Don-Chan\combo_0050.wav" />
+    <Content Include="UserData\ComboSound\Don-Chan\combo_0100.wav" />
+    <Content Include="UserData\ComboSound\Don-Chan\combo_0200.wav" />
+    <Content Include="UserData\ComboSound\Don-Chan\combo_0300.wav" />
+    <Content Include="UserData\ComboSound\Don-Chan\combo_0400.wav" />
+    <Content Include="UserData\ComboSound\Don-Chan\combo_0500.wav" />
+    <Content Include="UserData\ComboSound\Don-Chan\combo_0600.wav" />
+    <Content Include="UserData\ComboSound\Don-Chan\combo_0700.wav" />
+    <Content Include="UserData\ComboSound\Don-Chan\combo_0800.wav" />
+    <Content Include="UserData\ComboSound\Don-Chan\combo_0900.wav" />
+    <Content Include="UserData\ComboSound\Don-Chan\combo_1000.wav" />
+    <Content Include="UserData\ComboSound\Don-Chan\combo_2000.wav" />
+    <Content Include="UserData\ComboSound\Don-Chan\combo_3000.wav" />
+    <Content Include="UserData\ComboSound\Don-Chan\combo_4000.wav" />
+    <Content Include="UserData\ComboSound\Don-Chan\combo_5000.wav" />
+    <Content Include="UserData\ComboSound\Don-Chan\combo_6000.wav" />
+    <Content Include="UserData\ComboSound\Don-Chan\combo_7000.wav" />
+    <Content Include="UserData\ComboSound\Don-Chan\combo_8000.wav" />
+    <Content Include="UserData\ComboSound\Don-Chan\combo_9000.wav" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
