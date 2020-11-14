@@ -25,10 +25,10 @@ namespace ComboSound.Modules
     {
         [Inject]
         ScoreController _scoreController;
+        private Dictionary<int, AudioClip> _audioSources;
+        AudioSource _audioSource;
 
-        private Dictionary<int, AudioSource> _audioSources;
-
-        private static readonly Regex _songFileRegex = new Regex(@"combo_[0-9]{4}\.wav");
+        
 
         // These methods are automatically called by Unity, you should remove any you aren't using.
         #region Monobehaviour Messages
@@ -38,6 +38,7 @@ namespace ComboSound.Modules
         private void Awake()
         {
             Logger.Debug($"{name}: Awake()");
+            this._audioSource = this.gameObject.AddComponent<AudioSource>();
         }
         
 
@@ -64,45 +65,21 @@ namespace ComboSound.Modules
 
         public void Initialize()
         {
-            this.StartCoroutine(this.CreateAudioSources());
+            this.CreateAudioSources();
         }
 
-        IEnumerator CreateAudioSources()
+        void CreateAudioSources()
         {
-            var audios = new List<KeyValuePair<int, AudioSource>>();
-            foreach (var songPath in Directory.EnumerateFiles(Plugin.DataPath, "*.wav", SearchOption.AllDirectories).Where(x => _songFileRegex.IsMatch(Path.GetFileName(x)))) {
-                Logger.Debug(songPath);
-                var song = UnityWebRequestMultimedia.GetAudioClip(songPath, AudioType.WAV);
-                yield return song.SendWebRequest();
-                if (!string.IsNullOrEmpty(song.error)) {
-                    Logger.Error($"{song.error}");
-                }
-                else {
-                    var audio = this.gameObject.AddComponent<AudioSource>();
-                    try {
-                        audio.volume = PluginConfig.Instance.Volume / 100f;
-                        audio.clip = DownloadHandlerAudioClip.GetContent(song);
-                        audio.clip.name = Path.GetFileName(songPath);
-                        var conboNum = Regex.Match(audio.clip.name, "[0-9]{4}").Value;
-                        if (int.TryParse(conboNum, out var number)) {
-                            audios.Add(new KeyValuePair<int, AudioSource>(number, audio));
-                        }
-                    }
-                    catch (Exception e) {
-                        Logger.Error(e);
-                        continue;
-                    }
-                    yield return new WaitWhile(() => !audio.clip);
-                }
+            if (SoundManager.Sounds.TryGetValue(Path.Combine(Plugin.DataPath, PluginConfig.Instance.CurrentSound), out var dictionary)) {
+                this._audioSource.volume = PluginConfig.Instance.Volume / 100f;
+                this._audioSources = dictionary;
             }
-
-            this._audioSources = new Dictionary<int, AudioSource>(audios);
         }
 
         private void ScoreController_comboDidChangeEvent(int obj)
         {
-            if (this._audioSources != null && this._audioSources.TryGetValue(obj, out var audioSource)) {
-                audioSource.Play();
+            if (this._audioSources != null && this._audioSources.TryGetValue(obj, out var audioClip)) {
+                this._audioSource.PlayOneShot(audioClip);
             }
         }
     }

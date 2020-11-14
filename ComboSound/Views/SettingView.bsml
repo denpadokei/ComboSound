@@ -2,5 +2,6 @@
   <vertical horizontal-fit='PreferredSize' child-align='UpperCenter' vertical-fit='PreferredSize'>
     <checkbox text='Enable' value='is-enable' bind-value='true' apply-on-change='true'></checkbox>
     <slider-setting text='Volume' increment='10' integer-only='true' min='0' max='100' value='volume' bind-value='true' apply-on-change='true'></slider-setting>
+    <dropdown-list-setting id='sound-dropdown' choices='sounds' text='ComboSound priset' apply-on-change='true'></dropdown-list-setting>
   </vertical>
 </bg>
