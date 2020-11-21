@@ -82,7 +82,10 @@ namespace ComboSound.Views
                     this._simpleTextDropdown.SetTexts(this._sounds);
                     this._simpleTextDropdown.ReloadData();
                     this._simpleTextDropdown.didSelectCellWithIdxEvent += this._simpleTextDropdown_didSelectCellWithIdxEvent;
-                    if (this._sounds.Any(x => x == PluginConfig.Instance.CurrentSound)) {
+                    if (string.IsNullOrEmpty(PluginConfig.Instance.CurrentSound)) {
+                        PluginConfig.Instance.CurrentSound = this._sounds.FirstOrDefault() ?? "";
+                    }
+                    else if (this._sounds.Any(x => x == PluginConfig.Instance.CurrentSound)) {
                         this._simpleTextDropdown.SelectCellWithIdx(this._sounds.IndexOf(PluginConfig.Instance.CurrentSound));
                     }
                     else {
