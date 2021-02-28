@@ -38,7 +38,8 @@ namespace ComboSound
             Log.Info("ComboSound initialized.");
             Configuration.PluginConfig.Instance = conf.Generated<Configuration.PluginConfig>();
             Log.Debug("Config loaded");
-            zenjector.OnGame<ComboSoundInstaller>();
+            zenjector.OnGame<ComboSoundInstaller>(false).OnlyForMultiplayer();
+            zenjector.OnGame<ComboSoundInstaller>().OnlyForStandard();
         }
 
         [OnStart]
