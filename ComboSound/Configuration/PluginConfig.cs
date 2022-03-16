@@ -1,15 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
+﻿using IPA.Config.Stores;
+using System;
 using System.Runtime.CompilerServices;
-using System.Text.RegularExpressions;
-using IPA.Config.Stores;
-using UnityEngine;
-using UnityEngine.Networking;
 
 [assembly: InternalsVisibleTo(GeneratedStore.AssemblyVisibilityTarget)]
 namespace ComboSound.Configuration
@@ -23,7 +14,7 @@ namespace ComboSound.Configuration
 
         public event Action<PluginConfig> OnReloadEvent;
         public event Action<PluginConfig> OnChangeEvent;
-        
+
 
         /// <summary>
         /// This is called whenever BSIPA reads the config from disk (including when file changes are detected).
