@@ -1,19 +1,13 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+﻿using BeatSaberMarkupLanguage.GameplaySetup;
+using ComboSound.Installer;
+using ComboSound.Views;
 using IPA;
 using IPA.Config;
 using IPA.Config.Stores;
-using UnityEngine.SceneManagement;
-using UnityEngine;
-using IPALogger = IPA.Logging.Logger;
-using ComboSound.Modules;
-using System.IO;
 using SiraUtil.Zenject;
-using ComboSound.Installer;
-using BeatSaberMarkupLanguage.GameplaySetup;
-using ComboSound.Views;
+using System;
+using System.IO;
+using IPALogger = IPA.Logging.Logger;
 
 namespace ComboSound
 {

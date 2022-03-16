@@ -1,20 +1,15 @@
-﻿using System;
+﻿using BeatSaberMarkupLanguage.Attributes;
+using ComboSound.Configuration;
+using ComboSound.Modules;
+using HMUI;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using BeatSaberMarkupLanguage;
-using BeatSaberMarkupLanguage.Attributes;
-using BeatSaberMarkupLanguage.Components;
-using BeatSaberMarkupLanguage.GameplaySetup;
-using BeatSaberMarkupLanguage.ViewControllers;
-using ComboSound.Configuration;
-using ComboSound.Modules;
-using HMUI;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace ComboSound.Views
@@ -22,9 +17,9 @@ namespace ComboSound.Views
     public class SettingView : PersistentSingleton<SettingView>, INotifyPropertyChanged
     {
         // For this method of setting the ResourceName, this class must be the first class in the file.
-        public string ResourceName => string.Join(".", GetType().Namespace, GetType().Name);
-        
-        
+        public string ResourceName => string.Join(".", this.GetType().Namespace, this.GetType().Name);
+
+
         /// <summary>説明 を取得、設定</summary>
         [UIValue("is-enable")]
         public bool IsEnable
@@ -53,7 +48,8 @@ namespace ComboSound.Views
         [UIValue("sounds")]
         public List<object> Sounds { get; set; } = new List<object>() { "Don-Chan" };
         private List<string> _sounds;
-        void Awake()
+
+        private void Awake()
         {
             this.StartCoroutine(SoundManager.LoadSounds());
         }
@@ -68,7 +64,7 @@ namespace ComboSound.Views
         {
             yield return new WaitWhile(() => SoundManager.IsLoading);
             try {
-                
+
                 Logger.Debug($"sounds count : {SoundManager.Sounds.Count}");
 
                 var sounds = new List<string>();
@@ -105,19 +101,19 @@ namespace ComboSound.Views
         }
 
         [UIAction("#post-parse")]
-        void PostParse()
+        private void PostParse()
         {
             this.StartCoroutine(this.CreateList());
         }
         [UIComponent("sound-dropdown")]
-        private object _dropDownObject;
-        SimpleTextDropdown _simpleTextDropdown;
+        private readonly object _dropDownObject;
+        private SimpleTextDropdown _simpleTextDropdown;
 
 
         #region INotifyPropertyChange
         public event PropertyChangedEventHandler PropertyChanged;
 
-        void NotifyPropertyChanged([CallerMemberName] string member = null)
+        private void NotifyPropertyChanged([CallerMemberName] string member = null)
         {
             this.OnPropertyChanged(new PropertyChangedEventArgs(member));
         }

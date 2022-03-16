@@ -1,18 +1,7 @@
 ﻿using ComboSound.Configuration;
-using ComboSound.Utilities;
-using ComboSound.Views;
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.Networking;
 using Zenject;
 
 namespace ComboSound.Modules
@@ -23,11 +12,11 @@ namespace ComboSound.Modules
     /// </summary>
     public class ComboSoundController : MonoBehaviour, IInitializable
     {
-        ScoreController _scoreController;
+        private IComboController _comboController;
         private Dictionary<int, AudioClip> _audioSources;
-        AudioSource _audioSource;
+        private AudioSource _audioSource;
 
-        
+
 
         // These methods are automatically called by Unity, you should remove any you aren't using.
         #region Monobehaviour Messages
@@ -36,40 +25,32 @@ namespace ComboSound.Modules
         /// </summary>
         private void Awake()
         {
-            Logger.Debug($"{name}: Awake()");
+            Logger.Debug($"{this.name}: Awake()");
             this._audioSource = this.gameObject.AddComponent<AudioSource>();
         }
-        
+
 
         /// <summary>
         /// Called when the script is being destroyed.
         /// </summary>
         private void OnDestroy()
         {
-            Logger.Debug($"{name}: OnDestroy()");
-            if (this._scoreController != null) {
-                this._scoreController.comboDidChangeEvent -= this.ScoreController_comboDidChangeEvent;
+            Logger.Debug($"{this.name}: OnDestroy()");
+            if (this._comboController != null) {
+                this._comboController.comboDidChangeEvent -= this.ScoreController_comboDidChangeEvent;
             }
         }
         #endregion
         [Inject]
-        void Constractor(DiContainer container)
+        private void Constractor(IComboController comboController)
         {
             if (!PluginConfig.Instance.Enable) {
                 Logger.Debug("Combo sound is Disable");
                 return;
             }
-
-            try {
-                this._scoreController = container.Resolve<ScoreController>();
-            }
-            catch (Exception e) {
-                Logger.Error(e);
-                return;
-            }
-
-            this._scoreController.comboDidChangeEvent -= this.ScoreController_comboDidChangeEvent;
-            this._scoreController.comboDidChangeEvent += this.ScoreController_comboDidChangeEvent;
+            this._comboController = comboController;
+            this._comboController.comboDidChangeEvent -= this.ScoreController_comboDidChangeEvent;
+            this._comboController.comboDidChangeEvent += this.ScoreController_comboDidChangeEvent;
         }
 
         public void Initialize()
@@ -77,7 +58,7 @@ namespace ComboSound.Modules
             this.CreateAudioSources();
         }
 
-        void CreateAudioSources()
+        private void CreateAudioSources()
         {
             if (SoundManager.Sounds.TryGetValue(Path.Combine(Plugin.DataPath, PluginConfig.Instance.CurrentSound), out var dictionary)) {
                 this._audioSource.volume = PluginConfig.Instance.Volume / 100f;
