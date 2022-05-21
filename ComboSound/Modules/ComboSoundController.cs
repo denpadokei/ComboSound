@@ -1,6 +1,9 @@
 ﻿using ComboSound.Configuration;
+using SiraUtil.Zenject;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
@@ -10,7 +13,7 @@ namespace ComboSound.Modules
     /// Monobehaviours (scripts) are added to GameObjects.
     /// For a full list of Messages a Monobehaviour can receive from the game, see https://docs.unity3d.com/ScriptReference/MonoBehaviour.html.
     /// </summary>
-    public class ComboSoundController : MonoBehaviour, IInitializable
+    public class ComboSoundController : MonoBehaviour, IAsyncInitializable
     {
         private IComboController _comboController;
         private Dictionary<int, AudioClip> _audioSources;
@@ -20,16 +23,6 @@ namespace ComboSound.Modules
 
         // These methods are automatically called by Unity, you should remove any you aren't using.
         #region Monobehaviour Messages
-        /// <summary>
-        /// Only ever called once, mainly used to initialize variables.
-        /// </summary>
-        private void Awake()
-        {
-            Logger.Debug($"{this.name}: Awake()");
-            this._audioSource = this.gameObject.AddComponent<AudioSource>();
-        }
-
-
         /// <summary>
         /// Called when the script is being destroyed.
         /// </summary>
@@ -53,13 +46,20 @@ namespace ComboSound.Modules
             this._comboController.comboDidChangeEvent += this.ScoreController_comboDidChangeEvent;
         }
 
-        public void Initialize()
+        public async Task InitializeAsync(CancellationToken token)
         {
-            this.CreateAudioSources();
+            this._audioSource = this.gameObject.AddComponent<AudioSource>();
+            await this.CreateAudioSources(token);
         }
 
-        private void CreateAudioSources()
+        private async Task CreateAudioSources(CancellationToken token)
         {
+            while (!token.IsCancellationRequested && this._audioSource == null) {
+                await Task.Yield();
+            }
+            if (token.IsCancellationRequested) {
+                return;
+            }
             if (SoundManager.Sounds.TryGetValue(Path.Combine(Plugin.DataPath, PluginConfig.Instance.CurrentSound), out var dictionary)) {
                 this._audioSource.volume = PluginConfig.Instance.Volume / 100f;
                 this._audioSources = dictionary;
