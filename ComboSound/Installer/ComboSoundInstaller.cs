@@ -7,7 +7,7 @@ namespace ComboSound.Installer
     {
         public override void InstallBindings()
         {
-            this.Container.BindInterfacesAndSelfTo<ComboSoundController>().FromNewComponentOnNewGameObject().AsSingle().NonLazy();
+            _ = this.Container.BindInterfacesAndSelfTo<ComboSoundController>().FromNewComponentOnNewGameObject().AsSingle().NonLazy();
         }
     }
 }

@@ -21,7 +21,8 @@ namespace ComboSoundTest
         [TestMethod]
         public void EnumrateFiles()
         {
-            foreach (var item in Directory.EnumerateFiles(@"D:\Oculus\Software\hyperbolic-magnetism-beat-saber\UserData\ComboSound", "*.wav").Where(x => _songFileRegex.IsMatch(Path.GetFileName(x)))) {
+            foreach (var item in Directory.EnumerateFiles(@"D:\Oculus\Software\hyperbolic-magnetism-beat-saber\UserData\ComboSound", "*.wav").Where(x => _songFileRegex.IsMatch(Path.GetFileName(x))))
+            {
                 Console.WriteLine(item);
             }
         }

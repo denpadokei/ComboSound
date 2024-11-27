@@ -7,51 +7,64 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.Networking;
+using Zenject;
 
 namespace ComboSound.Modules
 {
-    public class SoundManager
+    public class SoundManager : MonoBehaviour, IInitializable
     {
-        public static ConcurrentDictionary<string, Dictionary<int, AudioClip>> Sounds { get; set; } = new ConcurrentDictionary<string, Dictionary<int, AudioClip>>();
+        public ConcurrentDictionary<string, Dictionary<int, AudioClip>> Sounds { get; set; } = new ConcurrentDictionary<string, Dictionary<int, AudioClip>>();
         private static readonly Regex _songFileRegex = new Regex(@"combo_[0-9]{4}\.wav");
-        public static volatile bool IsLoading = false;
+        public volatile bool IsLoading = false;
 
-        public static IEnumerator LoadSounds()
+        public IEnumerator LoadSounds()
         {
-            IsLoading = true;
+            this.IsLoading = true;
             Logger.Debug("LoadSound call");
-            Sounds.Clear();
+            this.Sounds.Clear();
 
-            foreach (var songDirectory in Directory.EnumerateDirectories(Plugin.DataPath, "*", SearchOption.TopDirectoryOnly)) {
+            foreach (var songDirectory in Directory.EnumerateDirectories(Plugin.DataPath, "*", SearchOption.TopDirectoryOnly))
+            {
                 var dictionary = new Dictionary<int, AudioClip>();
-                foreach (var songPath in Directory.EnumerateFiles(songDirectory, "*.wav", SearchOption.TopDirectoryOnly).Where(x => _songFileRegex.IsMatch(Path.GetFileName(x)))) {
+                foreach (var songPath in Directory.EnumerateFiles(songDirectory, "*.wav", SearchOption.TopDirectoryOnly).Where(x => _songFileRegex.IsMatch(Path.GetFileName(x))))
+                {
                     Logger.Debug(songPath);
                     var song = UnityWebRequestMultimedia.GetAudioClip(songPath, AudioType.WAV);
                     yield return song.SendWebRequest();
-                    if (!string.IsNullOrEmpty(song.error)) {
+                    if (!string.IsNullOrEmpty(song.error))
+                    {
                         Logger.Error($"{song.error}");
                     }
-                    else {
+                    else
+                    {
                         var clip = DownloadHandlerAudioClip.GetContent(song);
-                        try {
+                        try
+                        {
                             clip.name = Path.GetFileName(songPath);
                             var conboNum = Regex.Match(clip.name, "[0-9]{4}").Value;
 
-                            if (int.TryParse(conboNum, out var number)) {
-                                dictionary.TryAdd(number, clip);
+                            if (int.TryParse(conboNum, out var number))
+                            {
+                                _ = dictionary.TryAdd(number, clip);
                             }
                         }
-                        catch (Exception e) {
+                        catch (Exception e)
+                        {
                             Logger.Error(e);
                             continue;
                         }
                         yield return new WaitWhile(() => !clip);
                     }
                 }
-                Sounds.AddOrUpdate(songDirectory, dictionary, (s, d) => dictionary);
+                _ = this.Sounds.AddOrUpdate(songDirectory, dictionary, (s, d) => dictionary);
             }
             Logger.Debug("Finish LoadSong");
-            IsLoading = false;
+            this.IsLoading = false;
+        }
+
+        public void Initialize()
+        {
+            _ = this.StartCoroutine(this.LoadSounds());
         }
     }
 }

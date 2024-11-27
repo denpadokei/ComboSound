@@ -18,7 +18,7 @@ namespace ComboSound.Modules
         private IComboController _comboController;
         private Dictionary<int, AudioClip> _audioSources;
         private AudioSource _audioSource;
-
+        private SoundManager _soundManager;
 
 
         // These methods are automatically called by Unity, you should remove any you aren't using.
@@ -29,19 +29,22 @@ namespace ComboSound.Modules
         private void OnDestroy()
         {
             Logger.Debug($"{this.name}: OnDestroy()");
-            if (this._comboController != null) {
+            if (this._comboController != null)
+            {
                 this._comboController.comboDidChangeEvent -= this.ScoreController_comboDidChangeEvent;
             }
         }
         #endregion
         [Inject]
-        private void Constractor(IComboController comboController)
+        public void Constractor(IComboController comboController, SoundManager soundManager)
         {
-            if (!PluginConfig.Instance.Enable) {
+            if (!PluginConfig.Instance.Enable)
+            {
                 Logger.Debug("Combo sound is Disable");
                 return;
             }
             this._comboController = comboController;
+            this._soundManager = soundManager;
             this._comboController.comboDidChangeEvent -= this.ScoreController_comboDidChangeEvent;
             this._comboController.comboDidChangeEvent += this.ScoreController_comboDidChangeEvent;
         }
@@ -54,13 +57,17 @@ namespace ComboSound.Modules
 
         private async Task CreateAudioSources(CancellationToken token)
         {
-            while (!token.IsCancellationRequested && this._audioSource == null) {
+            while (!token.IsCancellationRequested && this._audioSource == null)
+            {
                 await Task.Yield();
             }
-            if (token.IsCancellationRequested) {
+            if (token.IsCancellationRequested)
+            {
                 return;
             }
-            if (SoundManager.Sounds.TryGetValue(Path.Combine(Plugin.DataPath, PluginConfig.Instance.CurrentSound), out var dictionary)) {
+            var path = Path.Combine(Plugin.DataPath, PluginConfig.Instance.CurrentSound);
+            if (this._soundManager.Sounds.TryGetValue(path, out var dictionary))
+            {
                 this._audioSource.volume = PluginConfig.Instance.Volume / 100f;
                 this._audioSources = dictionary;
             }
@@ -68,7 +75,8 @@ namespace ComboSound.Modules
 
         private void ScoreController_comboDidChangeEvent(int obj)
         {
-            if (this._audioSources != null && this._audioSources.TryGetValue(obj, out var audioClip)) {
+            if (this._audioSources != null && this._audioSources.TryGetValue(obj, out var audioClip))
+            {
                 this._audioSource.PlayOneShot(audioClip);
             }
         }

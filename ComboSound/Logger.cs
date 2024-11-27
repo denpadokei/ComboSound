@@ -46,6 +46,5 @@ namespace ComboSound
         {
             IPALogger.Notice($"{Path.GetFileName(path)}[{member}({num})] : {message}");
         }
-
     }
 }

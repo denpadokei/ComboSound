@@ -1,24 +1,25 @@
 ﻿using BeatSaberMarkupLanguage.Attributes;
+using BeatSaberMarkupLanguage.GameplaySetup;
+using BeatSaberMarkupLanguage.ViewControllers;
 using ComboSound.Configuration;
 using ComboSound.Modules;
 using HMUI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 namespace ComboSound.Views
 {
-    public class SettingView : PersistentSingleton<SettingView>, INotifyPropertyChanged
+    [HotReload]
+    public class SettingView : BSMLAutomaticViewController, IInitializable, IDisposable
     {
         // For this method of setting the ResourceName, this class must be the first class in the file.
         public string ResourceName => string.Join(".", this.GetType().Namespace, this.GetType().Name);
-
 
         /// <summary>説明 を取得、設定</summary>
         [UIValue("is-enable")]
@@ -47,82 +48,124 @@ namespace ComboSound.Views
         }
         [UIValue("sounds")]
         public List<object> Sounds { get; set; } = new List<object>() { "Don-Chan" };
+
         private List<string> _sounds;
 
-        private void Awake()
+        [Inject]
+        public void Constractor(SoundManager soundManager)
         {
-            this.StartCoroutine(SoundManager.LoadSounds());
+            this._soundManager = soundManager;
         }
 
-        protected override void OnDestroy()
+        public void Initialize()
         {
-            this._simpleTextDropdown.didSelectCellWithIdxEvent -= this._simpleTextDropdown_didSelectCellWithIdxEvent;
-            base.OnDestroy();
+            GameplaySetup.Instance.AddTab("COMBO SOUND", this.ResourceName, this);
+            if (string.IsNullOrEmpty(PluginConfig.Instance.CurrentSound))
+            {
+                var key = this._soundManager.Sounds.FirstOrDefault().Key;
+                if (!string.IsNullOrEmpty(key)) {
+                    PluginConfig.Instance.CurrentSound = Path.GetFileName(key);
+                }
+            }
         }
 
         private IEnumerator CreateList()
         {
-            yield return new WaitWhile(() => SoundManager.IsLoading);
-            try {
+            yield return new WaitWhile(() => this._soundManager.IsLoading);
+            try
+            {
 
-                Logger.Debug($"sounds count : {SoundManager.Sounds.Count}");
+                Logger.Debug($"sounds count : {this._soundManager.Sounds.Count}");
 
                 var sounds = new List<string>();
-                foreach (var item in SoundManager.Sounds) {
+                foreach (var item in this._soundManager.Sounds)
+                {
                     sounds.Add(new DirectoryInfo(item.Key).Name);
                 }
-                if (this._dropDownObject is LayoutElement layout) {
+                if (this._dropDownObject is LayoutElement layout)
+                {
                     Logger.Debug("Reload!");
                     this._sounds = sounds.OrderBy(x => x).ToList();
                     this._simpleTextDropdown = layout.GetComponentsInChildren<SimpleTextDropdown>(true).FirstOrDefault();
                     this._simpleTextDropdown.SetTexts(this._sounds);
                     this._simpleTextDropdown.ReloadData();
-                    this._simpleTextDropdown.didSelectCellWithIdxEvent += this._simpleTextDropdown_didSelectCellWithIdxEvent;
-                    if (string.IsNullOrEmpty(PluginConfig.Instance.CurrentSound)) {
+                    this._simpleTextDropdown.didSelectCellWithIdxEvent += this.OnSimpleTextDropdown_didSelectCellWithIdxEvent;
+                    if (string.IsNullOrEmpty(PluginConfig.Instance.CurrentSound))
+                    {
                         PluginConfig.Instance.CurrentSound = this._sounds.FirstOrDefault() ?? "";
                     }
-                    else if (this._sounds.Any(x => x == PluginConfig.Instance.CurrentSound)) {
+                    else if (this._sounds.Any(x => x == PluginConfig.Instance.CurrentSound))
+                    {
                         this._simpleTextDropdown.SelectCellWithIdx(this._sounds.IndexOf(PluginConfig.Instance.CurrentSound));
                     }
-                    else {
+                    else
+                    {
                         this._simpleTextDropdown.SelectCellWithIdx(0);
                     }
                 }
             }
-            catch (Exception e) {
+            catch (Exception e)
+            {
                 Logger.Error(e);
             }
         }
 
-        private void _simpleTextDropdown_didSelectCellWithIdxEvent(DropdownWithTableView arg1, int arg2)
+        private void OnSimpleTextDropdown_didSelectCellWithIdxEvent(DropdownWithTableView arg1, int arg2)
         {
             PluginConfig.Instance.CurrentSound = this._sounds[arg2];
             Logger.Debug(PluginConfig.Instance.CurrentSound);
         }
 
         [UIAction("#post-parse")]
-        private void PostParse()
+        public void PostParse()
         {
-            this.StartCoroutine(this.CreateList());
+            _ = this.StartCoroutine(this.CreateList());
         }
+
         [UIComponent("sound-dropdown")]
         private readonly object _dropDownObject;
         private SimpleTextDropdown _simpleTextDropdown;
+        private SoundManager _soundManager;
+        private bool disposedValue;
 
-
-        #region INotifyPropertyChange
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void NotifyPropertyChanged([CallerMemberName] string member = null)
+        protected virtual void Dispose(bool disposing)
         {
-            this.OnPropertyChanged(new PropertyChangedEventArgs(member));
+            if (!this.disposedValue)
+            {
+                if (disposing)
+                {
+                    // TODO: マネージド状態を破棄します (マネージド オブジェクト)
+                    try
+                    {
+                        if (this._simpleTextDropdown)
+                        {
+                            this._simpleTextDropdown.didSelectCellWithIdxEvent -= this.OnSimpleTextDropdown_didSelectCellWithIdxEvent;
+                        }
+                        GameplaySetup.Instance?.RemoveTab("COMBO SOUND");
+                    }
+                    catch (Exception)
+                    {
+                    }
+                }
+
+                // TODO: アンマネージド リソース (アンマネージド オブジェクト) を解放し、ファイナライザーをオーバーライドします
+                // TODO: 大きなフィールドを null に設定します
+                this.disposedValue = true;
+            }
         }
 
-        protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
+        // // TODO: 'Dispose(bool disposing)' にアンマネージド リソースを解放するコードが含まれる場合にのみ、ファイナライザーをオーバーライドします
+        // ~SettingView()
+        // {
+        //     // このコードを変更しないでください。クリーンアップ コードを 'Dispose(bool disposing)' メソッドに記述します
+        //     Dispose(disposing: false);
+        // }
+
+        public void Dispose()
         {
-            this.PropertyChanged?.Invoke(this, e);
-            Logger.Debug($"PropertyChange : {e.PropertyName}");
+            // このコードを変更しないでください。クリーンアップ コードを 'Dispose(bool disposing)' メソッドに記述します
+            this.Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
-        #endregion
     }
 }

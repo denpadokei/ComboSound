@@ -1,6 +1,5 @@
-﻿using BeatSaberMarkupLanguage.GameplaySetup;
-using ComboSound.Installer;
-using ComboSound.Views;
+﻿using ComboSound.Installer;
+using ComboSound.Modules;
 using IPA;
 using IPA.Config;
 using IPA.Config.Stores;
@@ -32,7 +31,9 @@ namespace ComboSound
             Log.Info("ComboSound initialized.");
             Configuration.PluginConfig.Instance = conf.Generated<Configuration.PluginConfig>();
             Log.Debug("Config loaded");
+            zenjector.Install<AppInstaller>(Location.App);
             zenjector.Install<ComboSoundInstaller>(Location.Player);
+            zenjector.Install<MenuInstaller>(Location.Menu);
         }
 
         [OnStart]
@@ -44,12 +45,12 @@ namespace ComboSound
         [OnEnable]
         public void OnEnable()
         {
-            try {
+            try
+            {
                 Logger.Debug("OnEnable call");
-                Logger.Debug(SettingView.instance.ResourceName);
-                GameplaySetup.instance.AddTab("COMBO SOUND", SettingView.instance.ResourceName, SettingView.instance);
             }
-            catch (Exception e) {
+            catch (Exception e)
+            {
                 Logger.Error(e);
             }
         }

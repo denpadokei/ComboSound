@@ -1,14 +1,30 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <!-- This file contains project properties used by the build. -->
 <Project>
-  <PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
-    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
-    <DisableCopyToPlugins>true</DisableCopyToPlugins>
-    <DisableZipRelease>true</DisableZipRelease>
+  <PropertyGroup>
+    <ImportBSMTTargets>True</ImportBSMTTargets>
+    <BSMTProjectType>BSIPA</BSMTProjectType>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(NCrunch)' == '1'">
-    <ContinuousIntegrationBuild>false</ContinuousIntegrationBuild>
-    <DisableCopyToPlugins>true</DisableCopyToPlugins>
-    <DisableZipRelease>true</DisableZipRelease>
-  </PropertyGroup>
+  <ItemGroup>
+    <OutputCopy Include="$(TargetPath)" OutputPath="Plugins\$(AssemblyName).dll" />
+    <OutputCopy Include="$(OutputPath)\UserData\ComboSound\Don-Chan\combo_0050.wav" OutputPath="UserData\ComboSound\Don-Chan\combo_0050.wav" />
+    <OutputCopy Include="$(OutputPath)\UserData\ComboSound\Don-Chan\combo_0100.wav" OutputPath="UserData\ComboSound\Don-Chan\combo_0100.wav" />
+    <OutputCopy Include="$(OutputPath)\UserData\ComboSound\Don-Chan\combo_0200.wav" OutputPath="UserData\ComboSound\Don-Chan\combo_0200.wav" />
+    <OutputCopy Include="$(OutputPath)\UserData\ComboSound\Don-Chan\combo_0300.wav" OutputPath="UserData\ComboSound\Don-Chan\combo_0300.wav" />
+    <OutputCopy Include="$(OutputPath)\UserData\ComboSound\Don-Chan\combo_0400.wav" OutputPath="UserData\ComboSound\Don-Chan\combo_0400.wav" />
+    <OutputCopy Include="$(OutputPath)\UserData\ComboSound\Don-Chan\combo_0500.wav" OutputPath="UserData\ComboSound\Don-Chan\combo_0500.wav" />
+    <OutputCopy Include="$(OutputPath)\UserData\ComboSound\Don-Chan\combo_0600.wav" OutputPath="UserData\ComboSound\Don-Chan\combo_0600.wav" />
+    <OutputCopy Include="$(OutputPath)\UserData\ComboSound\Don-Chan\combo_0700.wav" OutputPath="UserData\ComboSound\Don-Chan\combo_0700.wav" />
+    <OutputCopy Include="$(OutputPath)\UserData\ComboSound\Don-Chan\combo_0800.wav" OutputPath="UserData\ComboSound\Don-Chan\combo_0800.wav" />
+    <OutputCopy Include="$(OutputPath)\UserData\ComboSound\Don-Chan\combo_0900.wav" OutputPath="UserData\ComboSound\Don-Chan\combo_0900.wav" />
+    <OutputCopy Include="$(OutputPath)\UserData\ComboSound\Don-Chan\combo_1000.wav" OutputPath="UserData\ComboSound\Don-Chan\combo_1000.wav" />
+    <OutputCopy Include="$(OutputPath)\UserData\ComboSound\Don-Chan\combo_2000.wav" OutputPath="UserData\ComboSound\Don-Chan\combo_2000.wav" />
+    <OutputCopy Include="$(OutputPath)\UserData\ComboSound\Don-Chan\combo_3000.wav" OutputPath="UserData\ComboSound\Don-Chan\combo_3000.wav" />
+    <OutputCopy Include="$(OutputPath)\UserData\ComboSound\Don-Chan\combo_4000.wav" OutputPath="UserData\ComboSound\Don-Chan\combo_4000.wav" />
+    <OutputCopy Include="$(OutputPath)\UserData\ComboSound\Don-Chan\combo_5000.wav" OutputPath="UserData\ComboSound\Don-Chan\combo_5000.wav" />
+    <OutputCopy Include="$(OutputPath)\UserData\ComboSound\Don-Chan\combo_6000.wav" OutputPath="UserData\ComboSound\Don-Chan\combo_6000.wav" />
+    <OutputCopy Include="$(OutputPath)\UserData\ComboSound\Don-Chan\combo_7000.wav" OutputPath="UserData\ComboSound\Don-Chan\combo_7000.wav" />
+    <OutputCopy Include="$(OutputPath)\UserData\ComboSound\Don-Chan\combo_8000.wav" OutputPath="UserData\ComboSound\Don-Chan\combo_8000.wav" />
+    <OutputCopy Include="$(OutputPath)\UserData\ComboSound\Don-Chan\combo_9000.wav" OutputPath="UserData\ComboSound\Don-Chan\combo_9000.wav" />
+  </ItemGroup>
 </Project>
