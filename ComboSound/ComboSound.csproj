@@ -11,6 +11,8 @@
     <RootNamespace>ComboSound</RootNamespace>
     <AssemblyName>ComboSound</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <!-- Used by nicoco007/setup-beat-saber in CI. -->
+    <GameVersion>1.40.8</GameVersion>
     <FileAlignment>512</FileAlignment>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>portable</DebugType>
