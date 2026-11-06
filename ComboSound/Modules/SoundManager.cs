@@ -45,7 +45,10 @@ namespace ComboSound.Modules
 
                             if (int.TryParse(conboNum, out var number))
                             {
-                                _ = dictionary.TryAdd(number, clip);
+                                if (!dictionary.ContainsKey(number))
+                                {
+                                    dictionary.Add(number, clip);
+                                }
                             }
                         }
                         catch (Exception e)
